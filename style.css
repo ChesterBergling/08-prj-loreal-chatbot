@@ -5,12 +5,36 @@
   padding: 0;
 }
 
+/* Brand color variables */
+:root {
+  --bg-off-white: #f4f2ee; /* Background Off-White */
+  --plum: #5e2750; /* Primary brand accent */
+  --black: #0b0b0c; /* Primary text / interface */
+  --silver: #c7c7c7; /* Borders / dividers */
+  --white: #ffffff; /* Highlights / text on dark */
+}
+
 /* —— body + fonts —— */
 body {
+  /* Body font: Montserrat (already loaded in index.html). */
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  color: var(--black);
+  background: var(--bg-off-white);
   display: flex;
   justify-content: center;
+}
+
+/* Headings font: Bauer Bodoni (use fallbacks if the exact font isn't installed).
+   If you have the Bauer Bodoni webfont, consider loading it with @font-face
+   or linking to a hosted font provider. */
+h1,
+h2,
+.site-title,
+.assistant-intro,
+.msg.ai {
+  font-family: "Bauer Bodoni", "Bodoni MT", "Didot", Georgia, serif;
+  /* Bodoni-style headings often look best at a heavier weight */
+  font-weight: 600;
 }
 
 .page-wrapper {
@@ -28,6 +52,7 @@ body {
   font-size: 22px;
   font-weight: 500;
   margin-bottom: 10px;
+  color: var(--plum);
 }
 
 /* chat window */
@@ -37,13 +62,15 @@ body {
 
 .chat-window {
   height: 360px;
-  border: 1px solid #000;
+  border: 1px solid var(--silver);
   padding: 20px;
   font-size: 18px;
   line-height: 1.5;
   overflow-y: auto;
-  background: #fafafa;
+  background: var(--white);
+  color: var(--black);
   white-space: pre-line;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 /* messages */
@@ -53,11 +80,18 @@ body {
 }
 
 .msg.user {
-  color: #000;
+  color: var(--black);
 }
 
 .msg.ai {
-  color: #666666;
+  color: var(--plum);
+}
+
+/* typing indicator style */
+.msg.typing {
+  font-style: italic;
+  color: var(--plum);
+  opacity: 0.9;
 }
 
 /* input row */
@@ -70,19 +104,19 @@ body {
 .chat-form input {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--silver);
   font-size: 18px;
 }
 
 .chat-form input:focus {
-  outline: 2px solid #000;
+  outline: 2px solid var(--plum);
   outline-offset: 2px;
 }
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
-  color: #fff;
+  background: var(--plum);
+  color: var(--white);
   border: none;
   padding: 12px;
   width: 48px;
@@ -99,11 +133,11 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: #46183a; /* slightly darker plum */
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid var(--plum);
   outline-offset: 2px;
 }
 
@@ -125,7 +159,7 @@ body {
   margin: 60px 0 40px;
   text-align: center;
   font-size: 14px;
-  color: #666;
+  color: var(--black);
 }
 
 .site-footer nav {
@@ -134,10 +168,10 @@ body {
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--plum);
   text-decoration: none;
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: #46183a;
 }
