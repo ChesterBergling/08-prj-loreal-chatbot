@@ -19,7 +19,8 @@
     <div class="page-wrapper">
       <!------- Header / Branding ------->
       <header class="site-header">
-        <img src="/img/loreal-logo.png" alt="L'Oréal logo" class="site-logo" />
+        <!-- Use a relative path so the image works whether site is hosted at root or a subpath -->
+        <img src="img/loreal-logo.png" alt="L'Oréal logo" class="site-logo" />
         <h1 class="site-title">Smart Product Advisor</h1>
       </header>
 
@@ -60,8 +61,9 @@
       </footer>
     </div>
 
-    <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
-    <script src="secrets.js"></script>
+    <!-- Do NOT load secrets.js in production (it contains a literal API key).
+         Use a server or Cloudflare Worker that keeps OPENAI_API_KEY in environment
+         variables and proxy requests instead. -->
     <script src="script.js"></script>
   </body>
 </html>
