@@ -112,121 +112,7 @@ function isSkincareTopic(text) {
   return false;
 }
 
-/* -------------------- Spelling correction --------------------
-   Small fuzzy matcher using Levenshtein distance to correct common
-   skincare-related typos client-side. This helps short follow-ups like
-   "acme" -> "acne" be interpreted correctly by the bot.
-*/
-function levenshtein(a, b) {
-  const al = a.length;
-  const bl = b.length;
-  if (al === 0) return bl;
-  if (bl === 0) return al;
-  const matrix = Array.from({ length: al + 1 }, () => Array(bl + 1).fill(0));
-  for (let i = 0; i <= al; i++) matrix[i][0] = i;
-  for (let j = 0; j <= bl; j++) matrix[0][j] = j;
-  for (let i = 1; i <= al; i++) {
-    for (let j = 1; j <= bl; j++) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      matrix[i][j] = Math.min(
-        matrix[i - 1][j] + 1,
-        matrix[i][j - 1] + 1,
-        matrix[i - 1][j - 1] + cost
-      );
-    }
-  }
-  return matrix[al][bl];
-}
-
-// Vocabulary of common skincare words to compare against
-const vocab = [
-  "skin",
-  "skincare",
-  "acne",
-  "benzoyl",
-  "benzoyl peroxide",
-  "salicylic",
-  "salicylic acid",
-  "retinoid",
-  "retinol",
-  "niacinamide",
-  "moisturizer",
-  "moisturise",
-  "moistur",
-  "moisturizing",
-  "sunscreen",
-  "spf",
-  "cleanser",
-  "serum",
-  "routine",
-  "hydration",
-  "dry",
-  "oily",
-  "sensitive",
-  "anti-aging",
-  "age",
-  "tone",
-  "pigment",
-  "rosacea",
-  "eczema",
-  "product",
-  "products",
-  "recommend",
-  "best",
-  "which",
-  "choose",
-  "choice",
-  "option",
-  // L'Oréal brands for spell correction
-  "loreal",
-  "loreal paris",
-  "lancome",
-  "kiehls",
-  "la roche-posay",
-  "vichy",
-  "skinceuticals",
-  "cerave",
-  "garnier",
-  "maybelline",
-  "nyx",
-  "essie",
-  "urban decay",
-];
-
-function correctSpelling(text) {
-  if (!text) return { corrected: text, corrections: [] };
-  const words = text.split(/(\s+|[^a-zA-Z0-9\$]+)/).filter(Boolean);
-  const corrections = [];
-  const correctedWords = words.map((token) => {
-    const lower = token.toLowerCase();
-    // Only attempt correction for alphabetic tokens (skip punctuation, numbers, $)
-    if (!/^[a-zA-Z]+$/.test(lower)) return token;
-
-    let best = { word: token, dist: Infinity, target: null };
-    for (const v of vocab) {
-      // compare to each word part of vocab entries
-      const parts = v.split(/\s+/);
-      for (const p of parts) {
-        const d = levenshtein(lower, p);
-        // dynamic threshold: allow 1 for short words, 2 for longer
-        const threshold = p.length <= 4 ? 1 : 2;
-        if (d <= threshold && d < best.dist) {
-          best = { word: token, dist: d, target: p };
-        }
-      }
-    }
-
-    if (best.target && best.dist < Infinity) {
-      corrections.push({ from: token, to: best.target, distance: best.dist });
-      // preserve original casing roughly (lowercase target)
-      return best.target;
-    }
-    return token;
-  });
-
-  const corrected = correctedWords.join("");
-  return { corrected, corrections };
-}
+// Spelling correction removed: the app will accept user input verbatim.
 
 /* Budget detection: looks for common budget words or explicit price mentions.
    Returns a simple object when a budget is found, or null otherwise. */
@@ -367,17 +253,8 @@ chatForm.addEventListener("submit", (e) => {
 
   if (!text) return;
 
-  // Spelling correction: attempt to fix small typos before recording the user turn
-  const originalText = text;
-  const { corrected, corrections } = correctSpelling(text);
-  if (corrections.length > 0 && corrected !== originalText) {
-    // Show the original user input, then a small note about the interpreted text
-    appendMessage(`You: ${originalText}`, "user");
-    appendMessage(`(interpreted as: ${corrected})`, "note");
-    text = corrected;
-  } else {
-    appendMessage(`You: ${text}`, "user");
-  }
+  // Spellchecking removed: accept and display user input verbatim
+  appendMessage(`You: ${text}`, "user");
 
   const userEntry = { role: "user", content: text };
   conversation.push(userEntry);
