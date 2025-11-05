@@ -1,7 +1,7 @@
 // Copy this code into your Cloudflare Worker script
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env.OPENAI_API_KEY) {
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
