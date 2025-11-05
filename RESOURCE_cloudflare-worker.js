@@ -14,7 +14,7 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    const apiKey = "https://rough-cherry-5a3f.meberso.workers.dev/"; // Make sure to name your secret apiKey in the Cloudflare Workers dashboard
+    const OPENAI_API_KEY = "https://rough-cherry-5a3f.meberso.workers.dev/"; // Make sure to name your secret OPENAI_API_KEY in the Cloudflare Workers dashboard
     const apiUrl = "https://api.openai.com/v1/chat/completions";
     const userInput = await request.json();
 
@@ -27,7 +27,7 @@ export default {
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(requestBody),

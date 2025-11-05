@@ -200,7 +200,7 @@ async function callOpenAI(messages) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
       model,
@@ -232,17 +232,17 @@ function maskKey(key) {
   return `${first}••••••${last}`;
 }
 
-/* Make sure secrets.js exposes apiKey before using it in the browser.
+/* Make sure secrets.js exposes OPENAI_API_KEY before using it in the browser.
    Note: Storing a secret in client-side JS is insecure. Prefer a server or
    Cloudflare Worker proxy for real deployments. */
 let API_KEY_AVAILABLE = false;
-if (typeof apiKey === "undefined") {
+if (typeof OPENAI_API_KEY === "undefined") {
   // Do not expose key status to the user UI. Log to console for developers.
-  console.info("apiKey not found. Running in demo mode.");
+  console.info("OPENAI_API_KEY not found. Running in demo mode.");
   API_KEY_AVAILABLE = false;
 } else {
   // Masked key logged only to the console for developer inspection.
-  console.info(`apiKey: ${maskKey(apiKey)}`);
+  console.info(`OPENAI_API_KEY: ${maskKey(OPENAI_API_KEY)}`);
   API_KEY_AVAILABLE = true;
 }
 
