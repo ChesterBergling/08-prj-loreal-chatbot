@@ -58,32 +58,6 @@
           <a href="#">Contact</a>
         </nav>
       </footer>
-    </div>
-
-    <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
-    <script>
-      (async () => {
-        try {
-          // Use HEAD to check existence without downloading the file body.
-          const res = await fetch("secrets.js", { method: "HEAD" });
-          if (res.ok) {
-            // If the file exists, dynamically load it so OPENAI_API_KEY becomes available.
-            const s = document.createElement("script");
-            s.src = "secrets.js";
-            document.head.appendChild(s);
-            console.info("secrets.js loaded.");
-          } else {
-            // File missing: stay in demo mode and avoid the console 404 from a failed <script> tag.
-            console.info("secrets.js not found; running in demo mode.");
-          }
-        } catch (err) {
-          // Network/fetch error: remain in demo mode.
-          console.info(
-            "Could not load secrets.js (fetch failed); running in demo mode."
-          );
-        }
-      })();
-    </script>
     <script src="script.js"></script>
   </body>
 </html>
