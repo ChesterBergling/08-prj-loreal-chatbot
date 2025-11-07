@@ -1,2 +1,2 @@
-# Secrets file containing API keys
+# Ignore local secrets file that may contain API keys
 secrets.js
