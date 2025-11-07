@@ -236,6 +236,11 @@ function maskKey(key) {
    Note: Storing a secret in client-side JS is insecure. Prefer a server or
    Cloudflare Worker proxy for real deployments. */
 let API_KEY_AVAILABLE = false;
+// Clarifying comment: the browser may have attempted to fetch /secrets.js (from index.html).
+// If that file isn't present you'll see a 404 in the network/console. However, checking
+// typeof OPENAI_API_KEY is safe even when OPENAI_API_KEY is not defined — typeof returns
+// the string "undefined" and does not throw a ReferenceError. The 404 is a missing file,
+// not an error raised by this typeof check.
 if (typeof OPENAI_API_KEY === "undefined") {
   // Do not expose key status to the user UI. Log to console for developers.
   console.info("OPENAI_API_KEY not found. Running in demo mode.");
