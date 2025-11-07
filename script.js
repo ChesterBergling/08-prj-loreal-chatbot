@@ -196,7 +196,10 @@ async function callOpenAI(messages) {
   // Model to use — change if you prefer another model
   const model = "gpt-4o";
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+  // NOTE: changed endpoint to the user-provided Cloudflare Worker proxy.
+  // This sends the same payload to the proxy URL; the worker should forward
+  // the request to OpenAI (and handle auth) or accept the Authorization header.
+  const res = await fetch("https://rough-cherry-5a3f.meberso.workers.dev/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
