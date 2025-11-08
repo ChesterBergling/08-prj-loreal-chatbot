@@ -1,81 +1,40 @@
-// This worker receives a POST request, sends it to Mistral, and returns the response with CORS headers
+export default {
+  async fetch(request, env) {
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Authorization, Content-Type",
+      "Content-Type": "application/json",
+    };
 
-async function handleRequest(request, env) {
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Authorization, Content-Type",
-    "Content-Type": "application/json",
-  };
+    // Handle CORS preflight requests
+    if (request.method === "OPTIONS") {
+      // Ensure preflight response includes all necessary headers
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
 
-  // Handle CORS preflight
-  if (request.method === "OPTIONS") {
-    console.log("Preflight request received");
-    return new Response(null, { headers: corsHeaders });
-}
+    // Use the secret API key from environment variables bound to the Worker
+    const apiKey = env.OPENAI_API_KEY;
+    const apiUrl = "https://api.openai.com/v1/chat/completions";
+    const userInput = await request.json();
 
-  if (request.method === "GET") {
-    // Handle simple GET requests for CORS testing
-    return new Response(
-      JSON.stringify({
-        status: "ok",
-        message: "CORS headers are working!",
-      }),
-      {
-        status: 200,
-        headers: corsHeaders,
-      }
-    );
-  }
+    const requestBody = {
+      model: "gpt-4o",
+      messages: userInput.messages,
+      max_tokens: 300,
+    };
 
-  if (request.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
-      status: 405,
-      headers: corsHeaders,
-    });
-  }
-
-  // Get your API key from the environment variable
-  const apiKey = OPENAI_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({ error: "API key not set" }), {
-      status: 500,
-      headers: corsHeaders,
-    });
-  }
-
-  // Parse the incoming JSON body
-  let userInput;
-  try {
-    userInput = await request.json();
-  } catch (err) {
-    return new Response(JSON.stringify({ error: "Invalid JSON" }), {
-      status: 400,
-      headers: corsHeaders,
-    });
-  }
-
-  // Send the request to Mistral's API
-  const apiResponse = await fetch(
-    "https://api.mistral.ai/v1/chat/completions",
-    {
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userInput),
-    }
-  );
+      body: JSON.stringify(requestBody),
+    });
 
-  const data = await apiResponse.text();
+    const data = await response.json();
 
-  return new Response(data, {
-    status: apiResponse.status,
-    headers: corsHeaders,
-  });
-}
-
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request, event.env));
-});
+    return new Response(JSON.stringify(data), { headers: corsHeaders });
+  },
+};
