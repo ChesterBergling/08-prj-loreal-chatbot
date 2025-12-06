@@ -1,0 +1,21 @@
+{
+  "name": "08-prj-loreal-chatbot",
+  "version": "1.0.0",
+  "description": "L’Oréal is exploring the power of AI, and your job is to showcase what's possible. Your task is to build a chatbot that helps users discover and understand L’Oréal’s extensive range of products—makeup, skincare, haircare, and fragrances—as well as provide personalized routines and recommendations.",
+  "main": "RESOURCE_cloudflare-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChesterBergling/08-prj-loreal-chatbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ChesterBergling/08-prj-loreal-chatbot/issues"
+  },
+  "homepage": "https://github.com/ChesterBergling/08-prj-loreal-chatbot#readme"
+}

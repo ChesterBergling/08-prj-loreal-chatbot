@@ -7,16 +7,15 @@
 
 /* Brand color variables */
 :root {
-  --bg-off-white: #f4f2ee; /* Background Off-White */
-  --plum: #5e2750; /* Primary brand accent */
-  --black: #0b0b0c; /* Primary text / interface */
-  --silver: #c7c7c7; /* Borders / dividers */
-  --white: #ffffff; /* Highlights / text on dark */
+  --bg-off-white: #f4f2ee;
+  --plum: #5e2750;
+  --black: #0b0b0c;
+  --silver: #c7c7c7;
+  --white: #ffffff;
 }
 
 /* —— body + fonts —— */
 body {
-  /* Body font: Montserrat (already loaded in index.html). */
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
   color: var(--black);
   background: var(--bg-off-white);
@@ -24,16 +23,12 @@ body {
   justify-content: center;
 }
 
-/* Headings font: Bauer Bodoni (use fallbacks if the exact font isn't installed).
-   If you have the Bauer Bodoni webfont, consider loading it with @font-face
-   or linking to a hosted font provider. */
 h1,
 h2,
 .site-title,
 .assistant-intro,
 .msg.ai {
   font-family: "Bauer Bodoni", "Bodoni MT", "Didot", Georgia, serif;
-  /* Bodoni-style headings often look best at a heavier weight */
   font-weight: 600;
 }
 
@@ -70,7 +65,7 @@ h2,
   background: var(--white);
   color: var(--black);
   white-space: pre-line;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
 
 /* messages */
@@ -87,7 +82,6 @@ h2,
   color: var(--plum);
 }
 
-/* typing indicator style */
 .msg.typing {
   font-style: italic;
   color: var(--plum);
@@ -133,7 +127,7 @@ h2,
 }
 
 .chat-form button:hover {
-  background: #46183a; /* slightly darker plum */
+  background: #46183a;
 }
 
 .chat-form button:focus {
@@ -141,7 +135,6 @@ h2,
   outline-offset: 2px;
 }
 
-/* visually hidden */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -149,7 +142,7 @@ h2,
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(0,0,0,0);
   white-space: nowrap;
   border: 0;
 }
@@ -174,4 +167,10 @@ h2,
 
 .site-footer a:hover {
   color: #46183a;
+}
+
+.site-footer .disclaimer {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
 }
